@@ -198,6 +198,10 @@ def test_double_escape(parser):
         ("\x1b[27u", "escape"),
         ("\x1b[32;;32u", "space"),
         ("\x1b[32;2;32u", "shift+space"),
+        # Colon sub-parameters in the codepoint and modifier fields used to
+        # raise ValueError inside the input thread (#6746).
+        ("\x1b[97:65;2;65u", "A"),
+        ("\x1b[57441;1:3u", "left_shift"),
     ],
 )
 def test_keys(parser, sequence: str, key: str) -> None:
